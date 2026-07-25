@@ -1,6 +1,6 @@
 import { Send } from "lucide-react";
 import { useState,useEffect } from "react";
-
+import { API_BASE_URL } from "../config";
 export default function LeadForm() {
 
 const [formData, setFormData] = useState({
@@ -36,9 +36,11 @@ const handleSubmit = async (e) => {
 
  try {
   
-  const baseUrl = import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000";
+ const baseUrl = import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000";
+// Strip any accidental trailing slashes from baseUrl
+const cleanBaseUrl = baseUrl.replace(/\/$/, "");
 
-  const response = await fetch(`${baseUrl}/leads`, {
+const response = await fetch(`${cleanBaseUrl}/admin/leads`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-
+import { API_BASE_URL } from "../config";
 export default function AdminSignup() {
   const navigate = useNavigate();
 

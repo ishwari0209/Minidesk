@@ -2,6 +2,7 @@ import { Search, LogOut } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
+import { API_BASE_URL } from "../config";
 export default function AdminDashboard() {
 const [leads, setLeads] = useState([]);
 const [filteredLeads, setFilteredLeads] = useState([]);

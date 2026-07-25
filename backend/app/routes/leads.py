@@ -1,22 +1,22 @@
-from sqlalchemy import or_
-from app.schemas import LeadStatusUpdate
 from fastapi import APIRouter, Depends
+from sqlalchemy import or_
 from sqlalchemy.orm import Session
-from app.dependencies import get_current_admin
-from app.models import Admin
+
 from app.database import get_db
-from app.models import Lead
-from app.schemas import LeadCreate
+from app.dependencies import get_current_admin
+from app.models import Admin, Lead
+from app.schemas import LeadCreate, LeadStatusUpdate
 
-router = APIRouter()
+# Add prefix and tags here:
+router = APIRouter(prefix="/admin/leads", tags=["Leads"])
 
 
-@router.post("/leads")
+# Hits POST /admin/leads
+@router.post("")
 def create_lead(
     lead: LeadCreate,
     db: Session = Depends(get_db)
 ):
-
     new_lead = Lead(
         name=lead.name,
         email=lead.email,
@@ -32,7 +32,10 @@ def create_lead(
         "message": "Lead submitted successfully",
         "id": new_lead.id
     }
-@router.get("/admin/leads")
+
+
+# Hits GET /admin/leads
+@router.get("")
 def get_all_leads(
     search: str = "",
     current_admin: Admin = Depends(get_current_admin),
@@ -49,14 +52,16 @@ def get_all_leads(
         )
 
     return query.order_by(Lead.created_at.desc()).all()
-@router.put("/admin/leads/{lead_id}")
+
+
+# Hits PUT /admin/leads/{lead_id}
+@router.put("/{lead_id}")
 def update_status(
     lead_id: int,
     data: LeadStatusUpdate,
     current_admin: Admin = Depends(get_current_admin),
     db: Session = Depends(get_db)
 ):
-
     lead = db.query(Lead).filter(
         Lead.id == lead_id
     ).first()
@@ -69,7 +74,6 @@ def update_status(
     lead.status = data.status
 
     db.commit()
-
     db.refresh(lead)
 
     return {
