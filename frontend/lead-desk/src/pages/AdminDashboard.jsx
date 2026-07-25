@@ -1,6 +1,7 @@
 import { Search, LogOut } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Footer from "../components/Footer";
 export default function AdminDashboard() {
 const [leads, setLeads] = useState([]);
 const [filteredLeads, setFilteredLeads] = useState([]);
@@ -301,6 +302,7 @@ useEffect(() => {
         </div>
 
       </div>
+      <Footer />
 {selectedLead && (
   <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
 

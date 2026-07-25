@@ -1,6 +1,7 @@
 import Navbar from "../components/Navbar";
 import HeroText from "../components/HeroText";
 import LeadForm from "../components/LeadForm";
+import Footer from "../components/Footer";
 
 export default function LandingPage() {
   return (
@@ -11,6 +12,8 @@ export default function LandingPage() {
         <HeroText />
         <LeadForm />
       </section>
+      <Footer/>
     </div>
   );
 }
+   
