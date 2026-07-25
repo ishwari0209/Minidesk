@@ -5,6 +5,8 @@ from app.database import Base, engine
 from app.routes.leads import router as lead_router
 import app.models
 
+
+
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
@@ -12,9 +14,19 @@ app = FastAPI(
     version="1.0.0"
 )
 
+
+# Allow frontend origins
+origins = [
+    "https://minidesk.vercel.app",
+    "https://minidesk-git-main-ishwarimore451-4324s-projects.vercel.app",
+    "http://localhost:5173",
+    "http://localhost:3000",
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=origins,
+    allow_origin_regex=r"https://.*\.vercel\.app",  # Matches all Vercel previews!
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
