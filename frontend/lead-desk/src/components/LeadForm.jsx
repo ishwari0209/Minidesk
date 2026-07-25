@@ -34,13 +34,11 @@ const handleSubmit = async (e) => {
 
   setLoading(true);
 
- try {
-  
- const baseUrl = import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000";
-// Strip any accidental trailing slashes from baseUrl
-const cleanBaseUrl = baseUrl.replace(/\/$/, "");
+try {
+  const baseUrl = import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000";
+  const cleanBaseUrl = baseUrl.replace(/\/$/, "");
 
-const response = await fetch(`${cleanBaseUrl}/admin/leads`, {
+  const response = await fetch(`${cleanBaseUrl}/admin/leads`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -48,11 +46,15 @@ const response = await fetch(`${cleanBaseUrl}/admin/leads`, {
     body: JSON.stringify(formData),
   });
 
-    if (!response.ok) {
-      throw new Error("Failed to submit lead");
-    }
+  if (!response.ok) {
+    throw new Error(`Server returned ${response.status}`);
+  }
 
-    await response.json();
+  const data = await response.json();
+  console.log("Lead submitted successfully:", data);
+} catch (error) {
+  console.error("Failed to submit lead:", error);
+}
 
     setSubmitted(true);
 
@@ -63,10 +65,10 @@ const response = await fetch(`${cleanBaseUrl}/admin/leads`, {
       message: "",
     });
 
-  } catch (error) {
-    alert("Something went wrong!");
-    console.error(error);
-  }
+  // } catch (error) {
+  //   alert("Something went wrong!");
+  //   console.error(error);
+  // }
 
   setLoading(false);
 };
