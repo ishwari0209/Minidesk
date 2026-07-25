@@ -10,8 +10,6 @@ load_dotenv()
 SECRET_KEY = os.getenv("sec_key")
 ALGORITHM = os.getenv("algorithm")
 
-print("SECRET_KEY:", SECRET_KEY)
-print("ALGORITHM:", ALGORITHM)
 ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
 pwd_context = CryptContext(
