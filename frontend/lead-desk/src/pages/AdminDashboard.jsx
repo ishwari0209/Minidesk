@@ -27,19 +27,22 @@ useEffect(() => {
 }, []);
 const updateStatus = async (leadId, status) => {
   try {
-    const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
+  
+  // Clean base URL without trailing slashes
+  const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000").replace(/\/$/, "");
 
-    const response = await fetch(
-      `http://127.0.0.1:8000/admin/leads/${leadId}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ status }),
-      }
-    );
+  const response = await fetch(
+    `${API_BASE_URL}/admin/leads/${leadId}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ status }),
+    }
+  );
 
     if (!response.ok) {
       throw new Error("Failed to update status");
